@@ -1,42 +1,30 @@
-const fetch = require('node-fetch');
-const { URL } = require('url');
+import fetch from 'node-fetch';
 
-exports.handler = async (event) => {
-  const targetUrl = event.queryStringParameters.url;
-  if (!targetUrl) {
-    return {
-      statusCode: 400,
-      body: "Missing 'url' parameter."
-    };
-  }
 
-  try {
-    const response = await fetch(targetUrl, {
-      headers: {
-        'User-Agent': event.headers['user-agent'] || 'Mozilla/5.0'
-      }
-    });
-    let content = await response.text();
-    const baseUrl = new URL(targetUrl).origin;
 
-    // Rewrites URLs to stay within the proxy
-    content = content.replace(/(href|src)=\"(.*?)\"/g, (match, attr, url) => {
-      if (url.startsWith('http')) {
-        return `${attr}=\"/access?url=${encodeURIComponent(url)}\"`;
-      } else {
-        return `${attr}=\"/access?url=${encodeURIComponent(baseUrl + '/' + url)}\"`;
-      }
-    });
+export async function handler (event, context) {
+	try {
+		const data = JSON.parse(event.body);
+		const { pageURL } = data;
 
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'text/html' },
-      body: content
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: `Error fetching the URL: ${error.message}`
-    };
-  }
-};
+		const res = await fetch(pageURL);
+		const htmlContent = await res.text();
+
+		return {
+			statusCode: 200,
+			body: htmlContent,
+		};
+	} catch (e) {
+		let responseBody = "Something bad happened!";
+		if (e instanceof SyntaxError) {
+			responseBody = "Bad JSON!";
+		} else if (e instanceof TypeError) {
+			responseBody = "Bad URL!";
+		}
+
+		return {
+			statusCode: 404,
+			body: responseBody,
+		};
+	}
+}

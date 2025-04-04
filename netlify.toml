@@ -1,3 +1,8 @@
-[build]
-  functions = "netlify/functions"
-  publish = "frontend/build"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+from = "/proxy"
+to = "/.netlify/functions/proxy"
+status = 200
