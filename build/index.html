@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Web site created using create-react-app" />
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <title>Dynamica</title>
+        <script defer="defer" src="/static/js/main.e398e0e3.js"></script>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <input type="text" id="urlInput" placeholder="Voer een URL in">
+    <button onclick="sendRequest()">Submit</button>
+
+    <script>
+        function sendRequest() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Voer een geldige URL in.');
+                return;
+            }
+            
+            fetch('https://brilliant-baklava.netlify.app/proxy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pageURL: url })
+            })
+            .then(response => response.text())
+            .then(html => {
+                const newWindow = window.open("about:blank", "_blank");
+                if (newWindow) {
+                    newWindow.document.write(html);
+                    newWindow.document.close();
+                } else {
+                    alert("Popup geblokkeerd! Sta pop-ups toe in je browser.");
+                }
+            })
+            .catch(error => console.error('Fout bij het ophalen van de pagina:', error));
+        }
+    </script>
+</body>
+</html>
