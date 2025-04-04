@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="Web site created using create-react-app" />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <title>Dynamica</title>
-        <script defer="defer" src="/static/js/main.e398e0e3.js"></script>
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Dynamica is a free-to-use proxy API service that prioritizes speed and privacy." />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>Dynamica</title>
+    <script src="/static/js/main.e398e0e3.js"></script>
+    <link rel="stylesheet" href="/static/css/font.css" />
 </head>
 <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <input type="text" id="urlInput" placeholder="Voer een URL in">
-    <button onclick="sendRequest()">Submit</button>
+    <div class="container">
+        <h1>Welcome to Dynamica</h1>
+        <p>Dynamica is a free-to-use proxy API and service, designed for users who need fast and secure access to websites without compromising their privacy. Our service guarantees that no logs are stored, ensuring your browsing remains anonymous.</p>
+        <p>For more details, please refer to our <a href="/api">API Documentation</a>.</p>
+        <input type="url" id="urlInput" placeholder="Enter a URL" required>
+        <button onclick="sendRequest()">Submit</button>
+        <p class="note">Note: Ensure the URL is valid, including http:// or https://.</p>
+    </div>
 
     <script>
         function sendRequest() {
             const url = document.getElementById('urlInput').value;
-            if (!url) {
-                alert('Voer een geldige URL in.');
+            const valid = url.startsWith("http://") || url.startsWith("https://");
+
+            if (!url || !valid) {
+                alert('Please enter a valid URL.');
                 return;
             }
             
@@ -38,10 +47,10 @@
                     newWindow.document.write(html);
                     newWindow.document.close();
                 } else {
-                    alert("Popup geblokkeerd! Sta pop-ups toe in je browser.");
+                    alert("Your browser blocks pop-ups. Please allow them to use this site.");
                 }
             })
-            .catch(error => console.error('Fout bij het ophalen van de pagina:', error));
+            .catch(error => console.error('Error fetching the page:', error));
         }
     </script>
 </body>

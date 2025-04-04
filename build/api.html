@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamica API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            color: #007BFF;
+        }
+        pre {
+            background-color: #282828;
+            color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background-color: #282828;
+            color: #f5f5f5;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/font.css" />
+</head>
+<body>
+
+    <h1>Dynamica API Documentation</h1>
+    <p>Welcome to the official API documentation for Dynamica, a fast and free-to-use proxy service. This API allows you to fetch the HTML content of any URL without compromising your privacy. Below are the details on how to use the API.</p>
+
+    <div class="section">
+        <h2>API Endpoint</h2>
+        <p>The main endpoint for the API is:</p>
+        <pre><code>POST /proxy</code></pre>
+        <p>To use the API, send a POST request to the `/proxy` endpoint with the following parameters:</p>
+        <ul>
+            <li><strong>pageURL</strong>: The URL that you want to proxy (e.g., <code>https://example.com</code>).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Request Example</h2>
+        <p>Here’s an example of how to send a request to the API using JavaScript (fetch):</p>
+        <pre><code>
+fetch('https://brilliant-baklava.netlify.app/proxy', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ pageURL: 'https://example.com' })
+})
+.then(response => response.text())
+.then(html => {
+    console.log(html);  // The HTML content of the requested page
+});
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>API Authentication</h2>
+        <p>Currently, there is no authentication required to use the API. However, in the future, an API key will be necessary to authenticate requests. Limits on the number of requests will also be enforced. Stay tuned for updates!</p>
+    </div>
+
+    <div class="section">
+        <h2>Example Usage</h2>
+        <p>Here are some example requests in different programming languages:</p>
+
+        <h3>JavaScript</h3>
+        <pre><code>
+fetch('https://brilliant-baklava.netlify.app/proxy', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ pageURL: 'https://example.com' })
+})
+.then(response => response.text())
+.then(html => {
+    console.log(html);
+});
+        </code></pre>
+
+        <h3>PHP</h3>
+        <pre><code>
+<?php
+$url = 'https://brilliant-baklava.netlify.app/proxy';
+$data = array('pageURL' => 'https://example.com');
+$options = array(
+    'http' => array(
+        'header'  => "Content-type: application/json\r\n",
+        'method'  => 'POST',
+        'content' => json_encode($data),
+    ),
+);
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+echo $result;
+?>
+        </code></pre>
+
+        <h3>Python</h3>
+        <pre><code>
+import requests
+import json
+
+url = 'https://brilliant-baklava.netlify.app/proxy'
+data = {'pageURL': 'https://example.com'}
+response = requests.post(url, json=data)
+
+print(response.text)  # The HTML content of the requested page
+        </code></pre>
+    </div>
+
+</body>
+</html>
