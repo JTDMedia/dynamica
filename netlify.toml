@@ -6,3 +6,6 @@
 from = "/proxy"
 to = "/.netlify/functions/proxy"
 status = 200
+
+[build.environment]
+  publish = "build"

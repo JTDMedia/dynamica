@@ -1,0 +1,2 @@
+netlify deploy --prod
+pause
